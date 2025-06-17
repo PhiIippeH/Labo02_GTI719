@@ -20,59 +20,13 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <!-- Facebook SDK -->
-        <div id="fb-root"></div>
-        <script>
-            (function(d, s, id){
-               var js, fjs = d.getElementsByTagName(s)[0];
-               if (d.getElementById(id)) {return;}
-               js = d.createElement(s); js.id = id;
-               js.src = "https://connect.facebook.net/en_US/sdk.js";
-               fjs.parentNode.insertBefore(js, fjs);
-             }(document, 'script', 'facebook-jssdk'));
-
-            window.fbAsyncInit = function() {
-              FB.init({
-                appId      : '{{ env("FACEBOOK_APP_ID") }}',
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v23.0'
-              });
-            };     
-            
-            function checkLoginState() {
-              FB.login(function(response) {
-                if (response.authResponse) {
-                  FB.api('/me', {fields: 'name,email'}, function(response) {
-                    // Send token to Laravel backend
-                    fetch('/auth/facebook/callback', {
-                      method: 'GET',
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                      }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                      console.log('Login successful:', data);
-                      // Store the Passport token
-                      localStorage.setItem('auth_token', data.token);
-                    });
-                  });
-                }
-              }, {scope: 'public_profile,email',
-              return_scopes: true});
-            }
-          </script>
-
     <a href="/auth/google" class="inline-block px-5 py-1.5 text-[#1b1b18] bg-white border border-[#e3e3e0] hover:border-[#19140035] rounded-sm text-sm leading-normal">
         Login with Google
     </a>
     <!-- Login Button -->
-    <button onclick="checkLoginState()">
-        <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1d5NF6FdO2q.png" width="20" height="20">
-        Continue with Facebook
-    </button>
+    <a href="/auth/facebook" class="inline-block px-5 py-1.5 text-[#1b1b18] bg-white border border-[#e3e3e0] hover:border-[#19140035] rounded-sm text-sm leading-normal">
+      Login with Facebook
+    </a>
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
