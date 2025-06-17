@@ -24,3 +24,6 @@ Route::get('/auth/google/callback', function () {
 
     return response()->json(['token' => $token]);
 });
+
+Route::get('/auth/facebook', [AuthController::class, 'redirectToFacebook']);
+Route::get('/auth/facebook/callback', [AuthController::class, 'handleFacebookCallback']);
