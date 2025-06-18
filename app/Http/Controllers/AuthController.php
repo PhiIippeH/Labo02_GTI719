@@ -22,7 +22,6 @@ class AuthController extends Controller
             ->first();
 
             if (!$user) {
-                dd("User Not Found. Creating User...");
                 $user = User::create([
                     'name' => $fbUser->name,
                     'email' => $fbUser->email,
