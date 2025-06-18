@@ -18,18 +18,24 @@ class AuthController extends Controller
         try {
             $fbUser = Socialite::driver('facebook')->user();
             
-            $user = User::firstOrCreate(
-                ['facebook_id' => $fbUser->id],
-                [
-                    'name' => $fbUser->name,
-                ]
-            );
+            $user = User::where('email', $fbUser->email)
+            ->first();
 
+            if (!$user) {
+                dd("User Not Found. Creating User...");
+                $user = User::create([
+                    'name' => $fbUser->name,
+                    'email' => $fbUser->email,
+                    'password' => bcrypt('1234'),
+                ]);
+            }
+            echo "Done ! Generating token...";
             $token = $user->createToken('Facebook Token')->accessToken;
             
             return response()->json([
                 'token' => $token,
-                'user' => $user
+                'user' => $user,
+                'FBUser' => $fbUser
             ]);
             
         } catch (\Exception $e) {
