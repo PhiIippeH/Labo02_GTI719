@@ -1480,6 +1480,10 @@
        class="inline-block px-5 py-2 text-[#1b1b18] bg-white border border-[#e3e3e0] hover:border-[#19140035] rounded-sm text-sm leading-normal">
         Login with Facebook
     </a>
+    <a href="/login/idperso"
+       class="inline-block px-5 py-2 text-[#1b1b18] bg-white border border-[#e3e3e0] hover:border-[#19140035] rounded-sm text-sm leading-normal mt-2">
+        Login with IdPerso
+    </a>
     @if (Route::has('login'))
         <div class="h-14.5 hidden lg:block"></div>
 @endif

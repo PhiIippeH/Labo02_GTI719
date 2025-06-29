@@ -40,11 +40,18 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
-    
+
     'facebook' => [
         'client_id' => env('FACEBOOK_APP_ID'),
         'client_secret' => env('FACEBOOK_APP_SECRET'),
         'redirect' => env('FACEBOOK_REDIRECT_URI'),
+    ],
+
+    'idperso' => [
+        'client_id' => env('IDPERSO_CLIENT_ID'),
+        'client_secret' => env('IDPERSO_CLIENT_SECRET'),
+        'redirect' => env('IDPERSO_REDIRECT_URI'),
+        'base_uri' => env('IDPERSO_BASE_URI', 'http://localhost:8001'),
     ],
 
 ];

@@ -26,5 +26,20 @@ Route::get('/auth/google/callback', function () {
     return response()->json(['token' => $token]);
 });
 
+// Redirect to idperso for login
+Route::get('/login/idperso', function () {
+    $query = http_build_query([
+        'client_id' => config('services.idperso.client_id'),
+        'redirect_uri' => route('idperso.callback'),
+        'response_type' => 'code',
+        'scope' => 'openid profile email',
+        'state' => csrf_token(),
+    ]);
+    return redirect("http://localhost:8001/authorize?$query");
+});
+
+Route::get('/login/idperso', [AuthController::class, 'redirectToIdPerso']);
+Route::get('/login/idperso/callback', [AuthController::class, 'handleIdPersoCallback'])->name('idperso.callback');
+
 Route::get('/auth/facebook', [AuthController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [AuthController::class, 'handleFacebookCallback']);
