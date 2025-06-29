@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -56,7 +58,7 @@ class AuthController extends Controller
     {
         $code = $request->input('code');
 
-        $response = Http::asForm()->post(config('services.idperso.base_uri') . '/oauth/token', [
+        $response = Http::asForm()->post(config('services.idperso.base_uri') . '/token', [
             'grant_type' => 'authorization_code',
             'client_id' => config('services.idperso.client_id'),
             'client_secret' => config('services.idperso.client_secret'),
@@ -70,14 +72,21 @@ class AuthController extends Controller
             ->get(config('services.idperso.base_uri') . '/userinfo')
             ->json();
 
+        // dd($userInfo);
+
         $user = User::firstOrCreate(
             ['email' => $userInfo['email']],
-            ['name' => $userInfo['name']]
+        [
+            'name'     => $userInfo['name'],
+            'password' => $userInfo['password']
+        ]
         );
+
+
 
         auth()->login($user);
 
-        return redirect('/');
+        return response()->json(["name" => $userInfo['name'], "email" => $userInfo['email']], 200);
     }
 
 }

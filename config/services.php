@@ -51,7 +51,7 @@ return [
         'client_id' => env('IDPERSO_CLIENT_ID'),
         'client_secret' => env('IDPERSO_CLIENT_SECRET'),
         'redirect' => env('IDPERSO_REDIRECT_URI'),
-        'base_uri' => env('IDPERSO_BASE_URI', 'http://localhost:8001'),
+        'base_uri' => env('IDPERSO_BASE_URI', 'http://localhost:8001'),	
     ],
 
 ];
